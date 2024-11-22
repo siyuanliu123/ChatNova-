@@ -1,0 +1,35 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/fitnova?useSSL=false&characterEncoding=UTF-8
+    username: your_username
+    password: your_password
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  mybatis:
+    mapper-locations: classpath:mapper/*.xml
+    type-aliases-package: com.fitnova.model
+
+  mail:
+    host: smtp.your-email-service.com
+    port: 587
+    username: your_email@example.com
+    password: your_email_password
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+  sms:
+    provider: aliyun # 或 twilio 等其他服务
+    access-key: your_access_key
+    secret-key: your_secret_key
+    endpoint: sms.aliyuncs.com
+
+websocket:
+  endpoint: /chat
+  allowed-origins: "*"
