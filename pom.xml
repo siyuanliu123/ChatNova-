@@ -3,26 +3,24 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <!-- 项目基本信息 -->
+    <!-- 项目信息 -->
     <groupId>com.fitnova</groupId>
     <artifactId>fitnova</artifactId>
     <version>1.0.0</version>
-    <packaging>jar</packaging>
     <name>FitNova</name>
     <description>A Spring Boot-based social networking app</description>
 
     <!-- 父项目 -->
     <parent>
-        <groupId>com.fitnova</groupId>
-        <artifactId>fitnova</artifactId>
-        <version>3.1.0</version> <!-- 使用合适的 Spring Boot 版本 -->
-        <relativePath/> <!-- lookup parent from repository -->
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.2.5.RELEASE</version>
+        <relativePath/>
     </parent>
 
     <!-- 项目属性 -->
     <properties>
-        <java.version>17</java.version> <!-- Java 17 或更高 -->
-        <spring-cloud.version>2022.0.4</spring-cloud.version> <!-- 如果需要 Spring Cloud -->
+        <java.version>11</java.version>
     </properties>
 
     <!-- 项目依赖 -->
@@ -32,43 +30,68 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
-        </dependency>
+
+        <!-- MyBatis 依赖 -->
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
             <artifactId>mybatis-spring-boot-starter</artifactId>
-            <version>3.0.0</version>
+            <version>2.1.2</version>
         </dependency>
 
         <!-- MySQL 依赖 -->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.22</version>
         </dependency>
 
-        <!-- 邮件支持 -->
+        <!-- Lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- 测试依赖 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-mail</artifactId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.junit.vintage</groupId>
+                    <artifactId>junit-vintage-engine</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
-        <!-- WebSocket 支持 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-websocket</artifactId>
+            <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
 
-        <!-- JSON 处理 -->
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-        </dependency>
 
-        <!-- 短信支持（添加服务商依赖，如阿里云或 Twilio） -->
-        <!-- 示例：阿里云 -->
-        <dependency>
-            <groupId>com.aliyun</groupId>
-            <artifactId>aliyun-java-sdk-dysmsapi</artifactId>
-           
+    </dependencies>
+
+    <!-- 构建插件 -->
+    <build>
+        <plugins>
+            <!-- Maven 编译插件 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
+
+            <!-- Spring Boot Maven 插件 -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+</project>
