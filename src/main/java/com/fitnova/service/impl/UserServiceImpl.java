@@ -1,6 +1,9 @@
 package com.fitnova.service.impl;
 
-import com.fitnova.service.EmailService;
+import com.fitnova.mapper.UserMapper;
+import com.fitnova.mapper.UserSettingsMapper;
+import com.fitnova.model.entity.User;
+import com.fitnova.model.entity.UserSettings;
 import com.fitnova.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,54 +12,50 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserMapper userMapper;
 
     @Autowired
-    private EmailService emailService;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private UserSettingsMapper userSettingsMapper;
 
     @Override
-    public void register(UserDto userDto) {
-        // Check if user already exists
-        if (userRepository.findByEmail(userDto.getEmail()).isPresent()) {
-            throw new IllegalStateException("Email is already registered");
-        }
+    public Long createUser(User user) {
+        user.setOnlineStatus(false); // 默认离线
+        user.setAvatar("/default/avatar.png"); // 默认头像路径
+        userMapper.insertUser(user);
 
-        // Save user to the database
-        User user = new User();
-        user.setUsername(userDto.getUsername());
-        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
-        user.setEmail(userDto.getEmail());
-        user.setPhone(userDto.getPhone());
-        user.setCreatedAt(new Timestamp(System.currentTimeMillis()));
-        user.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
-
-        userRepository.save(user);
-
-        // Send verification email
-        String token = UUID.randomUUID().toString();
-        emailService.sendEmailVerification(user.getEmail(), token);
+        userMapper.insertUser(user);
+        // Initialize user settings with default values
+        UserSettings defaultSettings = new UserSettings();
+        defaultSettings.setUserId(user.getId());
+//        defaultSettings.setDarkMode(false);
+        defaultSettings.setNotifications(true);
+        defaultSettings.setLanguage("en");
+        userSettingsMapper.insertUserSettings(defaultSettings);
+        return user.getId();
     }
 
     @Override
-    public String login(LoginRequest loginRequest) {
-        User user = userRepository.findByUsername(loginRequest.getUsername())
-                .orElseThrow(() -> new IllegalStateException("User not found"));
-
-        if (!passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
-            throw new IllegalStateException("Invalid credentials");
-        }
-
-        // Return a simple token (for real apps, use JWT or OAuth)
-        return "TOKEN-" + UUID.randomUUID().toString();
+    public User findUserById(Long id) {
+        return userMapper.findUserById(id);
     }
 
     @Override
-    public void verifyEmail(String token) {
-        // Logic to verify the token
-        // For simplicity, assume token verification succeeds
-        System.out.println("Email verification succeeded for token: " + token);
+    public boolean updateUser(User user) {
+        return userMapper.updateUser(user) > 0;
+    }
+
+    @Override
+    public boolean deleteUser(Long id) {
+        return userMapper.deleteUser(id) > 0;
+    }
+
+    @Override
+    public UserSettings getUserSettings(Long userId) {
+        return userSettingsMapper.findSettingsByUserId(userId);
+    }
+
+    @Override
+    public boolean updateUserSettings(UserSettings userSettings) {
+        return userSettingsMapper.updateUserSettings(userSettings) > 0;
     }
 }

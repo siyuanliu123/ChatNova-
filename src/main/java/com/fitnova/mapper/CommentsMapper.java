@@ -1,7 +1,7 @@
 package com.fitnova.mapper;
 
 import com.fitnova.model.entity.Comment;
-import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -12,4 +12,12 @@ public interface CommentsMapper {
     void insert(Comment comment);
     void update(Comment comment);
     void deleteById(Integer id);
+
+    //Leon
+    @Insert("INSERT INTO tb_comment (post_id, user_id, content, create_time) VALUES (#{postId}, #{userId}, #{content}, NOW())")
+    @Options(useGeneratedKeys = true, keyProperty = "id")
+    int insertComment(Comment comment);
+
+    @Select("SELECT * FROM tb_comment WHERE post_id = #{postId} ORDER BY create_time DESC")
+    List<Comment> findCommentsByPostId(Long postId);
 }
