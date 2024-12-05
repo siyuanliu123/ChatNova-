@@ -53,14 +53,14 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public Integer addComment(Comment comment) {
-        commentMapper.insertComment(comment);
+        commentMapper.insert(comment);
         postMapper.incrementCommentCount(Long.valueOf(comment.getPostId()));
         return comment.getId();
     }
 
     @Override
     public List<Comment> getCommentsByPostId(Long postId) {
-        return commentMapper.findCommentsByPostId(postId);
+        return commentMapper.findCommentsByPostId(Math.toIntExact(postId));
     }
 }
 
