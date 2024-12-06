@@ -15,7 +15,11 @@ public class RepliesServiceImpl implements RepliesService {
 
     @Override
     public List<Reply> getRepliesByCommentId(Integer commentId) {
-        return repliesMapper.findByCommentId(commentId);
+        List<Reply> replies = repliesMapper.findByCommentId(commentId);
+        if (replies == null || replies.isEmpty()) {
+            throw new IllegalStateException("No replies found for commentId " + commentId);
+        }
+        return replies;
     }
 
     @Override
@@ -25,7 +29,10 @@ public class RepliesServiceImpl implements RepliesService {
 
     @Override
     public void deleteReply(Integer id) {
-        repliesMapper.deleteById(id);
+        int rowsAffected = repliesMapper.deleteById(id);
+        if (rowsAffected == 0) {
+            throw new IllegalStateException("Reply with id " + id + " does not exist");
+        }
     }
 }
 

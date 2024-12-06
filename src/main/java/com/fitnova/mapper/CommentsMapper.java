@@ -25,11 +25,19 @@ public interface CommentsMapper {
     // 更新评论
     @Update("UPDATE Comments SET post_id = #{postId}, user_id = #{userId}, content = #{content}, likes_count = #{likesCount} " +
             "WHERE id = #{id}")
-    void update(Comment comment);
+    int update(Comment comment);
+
+    // 删除评论之前先删除相关的点赞记录
+    @Delete("DELETE FROM CommentLikes WHERE comment_id = #{id}")
+    void deleteLikesByCommentId(Integer id);
+
+    // 删除评论关联的回复记录
+    @Delete("DELETE FROM Replies WHERE comment_id = #{id}")
+    void deleteRepliesByCommentId(Integer id);
 
     // 根据 ID 删除评论
     @Delete("DELETE FROM Comments WHERE id = #{id}")
-    void deleteById(Integer id);
+    int deleteById(Integer id);
 
     // 根据帖子 ID 查询评论
     @Select("SELECT * FROM Comments WHERE post_id = #{postId} ORDER BY created_at DESC")
