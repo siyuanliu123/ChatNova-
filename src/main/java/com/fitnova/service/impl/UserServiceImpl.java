@@ -19,6 +19,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Long createUser(User user) {
+        user.setIsActive(true); // 默认用户激活
         user.setOnlineStatus(false); // 默认离线
         user.setAvatar("/default/avatar.png"); // 默认头像路径
         userMapper.insertUser(user);

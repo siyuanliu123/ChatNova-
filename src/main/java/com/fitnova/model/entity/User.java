@@ -15,5 +15,10 @@ public class User {
     private Date createTime;
     private Date updateTime;
 
+    private String profilePicture; // 新增字段：用户头像
+    private String bio; // 新增字段：个人简介
+    private Boolean isActive; // 新增字段：用户是否激活
+    private String userType; // 新增字段：用户类型（user, coach）
+
     // Getters and Setters
 }

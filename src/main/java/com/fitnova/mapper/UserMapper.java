@@ -7,38 +7,20 @@ import java.util.List;
 
 @Mapper
 public interface UserMapper {
-//    @Select("SELECT * FROM users WHERE id = #{id}")
-//    User getUserById(Long id);
-//
-//    @Insert("INSERT INTO users(username, password, email, phone, is_email_verified, created_at, updated_at) " +
-//            "VALUES(#{username}, #{password}, #{email}, #{phone}, #{isEmailVerified}, #{createdAt}, #{updatedAt})")
-//    @Options(useGeneratedKeys = true, keyProperty = "id")
-//    void insertUser(User user);
-//
-//    @Update("UPDATE users SET username=#{username}, password=#{password}, email=#{email}, phone=#{phone}, " +
-//            "is_email_verified=#{isEmailVerified}, updated_at=#{updatedAt} WHERE id=#{id}")
-//    void updateUser(User user);
-//
-//    @Delete("DELETE FROM users WHERE id=#{id}")
-//    void deleteUser(Long id);
-//
-//    @Select("SELECT * FROM users")
-//    List<User> getAllUsers();
 
-    //
-    @Insert("INSERT INTO tb_users (username, email, password, create_time, update_time) VALUES (#{username}, #{email}, #{password}, NOW(), NOW())")
-    @Options(useGeneratedKeys = true, keyProperty = "id")
+    @Insert("INSERT INTO Users (username, email, password, profile_picture, bio, is_active, user_type, create_time, update_time) " +
+            "VALUES (#{username}, #{email}, #{password}, #{profilePicture}, #{bio}, #{isActive}, #{userType}, NOW(), NOW())")
+    @Options(useGeneratedKeys = true, keyProperty = "userId")
     int insertUser(User user);
 
-    @Select("SELECT * FROM tb_users WHERE id = #{id}")
-    User findUserById(Long id);
+    @Select("SELECT * FROM Users WHERE user_id = #{userId}")
+    User findUserById(Long userId);
 
-    @Select("SELECT * FROM tb_users WHERE email = #{email}")
-    User findUserByEmail(String email);
-
-    @Update("UPDATE tb_users SET username = #{username}, email = #{email}, update_time = NOW() WHERE id = #{id}")
+    @Update("UPDATE Users SET username = #{username}, email = #{email}, profile_picture = #{profilePicture}, " +
+            "bio = #{bio}, is_active = #{isActive}, user_type = #{userType}, update_time = NOW() WHERE user_id = #{userId}")
     int updateUser(User user);
 
-    @Delete("DELETE FROM tb_users WHERE id = #{id}")
-    int deleteUser(Long id);
+    @Delete("DELETE FROM Users WHERE user_id = #{userId}")
+    int deleteUser(Long userId);
 }
+
