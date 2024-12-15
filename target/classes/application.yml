@@ -1,0 +1,57 @@
+server:
+  port: 9999
+#
+#spring:
+#  datasource:
+#    url: jdbc:mysql://localhost:3306/fitnova?useSSL=false&characterEncoding=UTF-8
+#    username: your_username
+#    password: your_password
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#
+#  mybatis:
+#    mapper-locations: classpath:mapper/*.xml
+#    type-aliases-package: com.fitnova.model
+#
+#  mail:
+#    host: smtp.your-email-service.com
+#    port: 587
+#    username: your_email@example.com
+#    password: your_email_password
+#    properties:
+#      mail:
+#        smtp:
+#          auth: true
+#          starttls:
+#            enable: true
+#
+#  sms:
+#    provider: aliyun # 或 twilio 等其他服务
+#    access-key: your_access_key
+#    secret-key: your_secret_key
+#    endpoint: sms.aliyuncs.com
+#
+#websocket:
+#  endpoint: /chat
+#  allowed-origins: "*"
+
+spring:
+  datasource:
+    url: jdbc:mysql://172.16.178.128:3306/my_database?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+    username: remote_user
+    password: password
+    driver-class-name: com.mysql.cj.jdbc.Driver
+#    hikari:
+#      minimum-idle: 5
+#      maximum-pool-size: 10
+#      pool-name: HikariCP
+#      connection-timeout: 30000
+#      idle-timeout: 600000
+#      max-lifetime: 1800000
+
+#  jpa:
+#    hibernate:
+#      ddl-auto: update # 自动更新数据库表结构，可根据需求改为 validate 或 none
+#    properties:
+#      hibernate:
+#        dialect: org.hibernate.dialect.MySQL8Dialect # 根据你的 MySQL 版本调整
+
