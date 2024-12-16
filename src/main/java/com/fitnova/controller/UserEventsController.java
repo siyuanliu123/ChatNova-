@@ -20,10 +20,10 @@ public class UserEventsController {
         return "Event created successfully!";
     }
 
-    @GetMapping("/user/{userId}")
-    public List<UserEvent> getEventsByUserId(@PathVariable Integer userId) {
-        return userEventsService.getEventsByUserId(userId);
-    }
+//    @GetMapping("/user/{userId}")
+//    public List<UserEvent> getEventsByUserId(@PathVariable Integer userId) {
+//        return userEventsService.getEventsByUserId(userId);
+//    }
 
     @PutMapping("/{eventId}")
     public String updateEvent(@PathVariable Integer eventId, @RequestBody UserEvent event) {

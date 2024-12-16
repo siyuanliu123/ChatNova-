@@ -12,25 +12,35 @@ import java.util.List;
 public class UserEventsServiceImpl implements UserEventsService {
 
     @Autowired
-    private UserEventsMapper userEventsMapper;
+    private UserEventsMapper userEventMapper;
 
     @Override
-    public int addEvent(UserEvent event) {
-        return userEventsMapper.addEvent(event);
+    public List<UserEvent> getAllEvents() {
+        return userEventMapper.findAllEvents();
     }
 
     @Override
-    public List<UserEvent> getEventsByUserId(Integer userId) {
-        return userEventsMapper.findEventsByUserId(userId);
+    public UserEvent getEventById(Integer eventId) {
+        return userEventMapper.findEventById(eventId);
     }
 
     @Override
-    public int updateEvent(UserEvent event) {
-        return userEventsMapper.updateEvent(event);
+    public List<UserEvent> getEventsByCreator(Integer createdBy) {
+        return userEventMapper.findEventsByCreator(createdBy);
+    }
+
+    @Override
+    public int addEvent(UserEvent userEvent) {
+        return userEventMapper.insertEvent(userEvent);
+    }
+
+    @Override
+    public int updateEvent(UserEvent userEvent) {
+        return userEventMapper.updateEvent(userEvent);
     }
 
     @Override
     public int deleteEvent(Integer eventId) {
-        return userEventsMapper.deleteEvent(eventId);
+        return userEventMapper.deleteEvent(eventId);
     }
 }
