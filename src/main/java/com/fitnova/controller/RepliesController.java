@@ -26,8 +26,9 @@ public class RepliesController {
     }
 
     @PostMapping
-    public void createReply(@RequestBody Reply reply) {
+    public ResponseEntity<Void> createReply(@RequestBody Reply reply) {
         repliesService.createReply(reply);
+        return ResponseEntity.status(HttpStatus.CREATED).build(); // 201 Created
     }
 
     @DeleteMapping("/{id}")

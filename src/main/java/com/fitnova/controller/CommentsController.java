@@ -31,8 +31,9 @@ public class CommentsController {
     }
 
     @PostMapping
-    public void createComment(@RequestBody Comment comment) {
+    public ResponseEntity<Void> createComment(@RequestBody Comment comment) {
         commentsService.createComment(comment);
+        return ResponseEntity.status(HttpStatus.CREATED).build(); // 201 Created
     }
 
     @PutMapping("/{id}")
