@@ -3,7 +3,12 @@ package com.fitnova.service;
 import com.fitnova.model.entity.Coach;
 
 public interface CoachesService {
-    int registerCoach(Coach coach);
+    void registerCoach(Coach coach);
+
     Coach getCoachById(Integer coachId);
-    int updateCoach(Coach coach);
+
+    boolean updateCoach(Coach coach);
+
+    boolean isUserExists(Integer userId);
+
 }

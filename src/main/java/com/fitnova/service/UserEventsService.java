@@ -9,6 +9,7 @@ public interface UserEventsService {
     UserEvent getEventById(Integer eventId);
     List<UserEvent> getEventsByCreator(Integer createdBy);
     int addEvent(UserEvent userEvent);
-    int updateEvent(UserEvent userEvent);
-    int deleteEvent(Integer eventId);
+    boolean updateEvent(UserEvent userEvent);
+    void deleteEvent(Integer eventId);
+
 }

@@ -22,5 +22,9 @@ public interface UserMapper {
 
     @Delete("DELETE FROM Users WHERE user_id = #{userId}")
     int deleteUser(Long userId);
+
+    @Select("SELECT COUNT(*) FROM Users WHERE user_id = #{userId}")
+    int countById(@Param("userId") Integer userId);
+
 }
 

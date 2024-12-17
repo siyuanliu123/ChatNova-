@@ -35,12 +35,24 @@ public class UserEventsServiceImpl implements UserEventsService {
     }
 
     @Override
-    public int updateEvent(UserEvent userEvent) {
-        return userEventMapper.updateEvent(userEvent);
+    public boolean updateEvent(UserEvent userEvent) {
+        // 检查事件是否存在
+        UserEvent existingEvent = userEventMapper.findEventById(userEvent.getEventId());
+        if (existingEvent == null) {
+            throw new IllegalStateException("Event not found");
+        }
+        // 执行更新操作
+        int rowsAffected = userEventMapper.updateEvent(userEvent);
+        return rowsAffected > 0;
     }
 
+
     @Override
-    public int deleteEvent(Integer eventId) {
-        return userEventMapper.deleteEvent(eventId);
+    public void deleteEvent(Integer eventId) {
+        UserEvent existingEvent = userEventMapper.findEventById(eventId);
+        if (existingEvent == null) {
+            throw new IllegalStateException("Event not found");
+        }
+        userEventMapper.deleteEvent(eventId);
     }
 }

@@ -21,7 +21,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable() // 禁用 CSRF，适用于测试或开放接口场景
                 .authorizeRequests()
-                .antMatchers("/api/comments/**", "/api/replies/**").permitAll() // 允许 `/api/comments/**` 不需要认证
+                .antMatchers("/api/comments/**", "/api/replies/**","/api/events/**","/api/income/**","/api/coaches/**").permitAll() // 允许 `/api/comments/**` 不需要认证
                 .anyRequest().authenticated(); // 其他请求需要认证
     }
 
